@@ -1,4 +1,4 @@
-### LATE IV: Distributional Implications of LATE
+## LATE IV: Distributional Implications of LATE
 
 Many randomized encouragement designs have imperfect compliance, where only a fraction of people comply with their assignment. Examples include phone-bank get-out-the-vote (GOTV) campaigns and draft lotteries like the Vietnam Draft Lottery. In these settings, it is common to use instrumental variable (IV) regression for analysis.
 
@@ -6,7 +6,7 @@ Instrumental variables identify the Local Average Treatment Effect (LATE) under 
 
 This leads to a sharp testable implication. When the instrument Z flips, only compliers can change treatment status. Therefore, only compliers can contribute to the treatment effect, which implies that the distribution of the intention-to-treat (ITT) effect follows a specific pattern—one with a lumpy distribution reflecting the complier-only effects.
 
-We turn this insight into testable implications about distributional equalities. Under LATE assumptions, the difference in outcome CDFs between instrument values must equal the complier share times the difference in complier potential outcome CDFs. Formally, for all y: F_{Y|Z=1}(y) - F_{Y|Z=0}(y) = p_C[F_{1C}(y) - F_{0C}(y)]. This extends LATE from a statement about means to a family of restrictions across the entire distribution.
+We turn this insight into testable implications about distributional equalities. Under LATE assumptions, the difference in outcome CDFs between instrument values must equal the complier share times the difference in complier potential outcome CDFs. Formally, for all y: $F_{Y|Z=1}(y) - F_{Y|Z=0}(y) = p_C[F_{1C}(y) - F_{0C}(y)]$. This extends LATE from a statement about means to a family of restrictions across the entire distribution.
 
 These distributional restrictions provide leverage for detecting violations of the underlying assumptions. Exclusion violations shift the entire distribution, including regions where compliers are absent. Defiers create opposing movements that disturb the expected monotonicity of the CDF difference. The ITT effect distribution should exhibit concentrated movement where compliers lie and zero movement elsewhere—deviations from this pattern signal assumption failures.
 
@@ -26,7 +26,7 @@ Implementation remains straightforward with standard econometric software. The m
 
 The broader methodological point concerns the testable implications of identification assumptions. These assumptions often imply restrictions beyond their immediate targets. By developing appropriate tests for these implications, we strengthen our ability to assess when causal identification strategies succeed or fail. The distributional approach presented here represents one avenue for improving the credibility of instrumental variable analyses.
 
-#### Simulation study
+### Simulation study
 
 The core design is a randomized trial without covariates. Principal strata are drawn with shares that sum to one. Assignment is Bernoulli with rate one half. Potential treatment equals type rules. The baseline outcome $Y(0)$ is standard normal. Complier treatment effects are normal with mean $0.5$ and standard deviation $0.4$. Observed outcomes satisfy exclusion in the null. Four classes of scenarios are studied.
 
