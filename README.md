@@ -80,19 +80,11 @@ where $\hat H$ is a pooled empirical measure on a grid. With covariates, obtain 
 
 For indicator basis $g_j(y)=\mathbf{1}\{y\le t_j\}$, define moments
 
-$$
-m_j
-=
-\Big(\mathbb{E}[g_j(Y)\mid Z{=}1]-\mathbb{E}[g_j(Y)\mid Z{=}0]\Big)
--
-p_C\Big(\mathbb{E}[g_j(Y(1))\mid C]-\mathbb{E}[g_j(Y(0))\mid C]\Big).
-$$
+$$m_j = \Big(\mathbb{E}[g_j(Y)\mid Z{=}1]-\mathbb{E}[g_j(Y)\mid Z{=}0]\Big) - p_C\Big(\mathbb{E}[g_j(Y(1))\mid C]-\mathbb{E}[g_j(Y(0))\mid C]\Big)$$
 
 Stack $m=(m_1,\dots,m_J)$. Use a heteroskedastic‑robust GMM $J$‑test
 
-$$
-T_J = n\, \hat m^{\top} \hat W^{-1}\hat m
-$$
+$$T_J = n\, \hat m^{\top} \hat W^{-1}\hat m$$
 
 with a sandwich covariance $\hat W$. This test targets chosen regions of the distribution through the cutpoints $t_j$.
 
