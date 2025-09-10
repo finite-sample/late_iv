@@ -1,90 +1,32 @@
 ### LATE IV: Distributional Implications of LATE 
 
+# Distributional Implications of LATE
+
 Many randomized encouragement designs have imperfect compliance, where only a fraction of people comply with their assignment. Examples include phone-bank get-out-the-vote (GOTV) campaigns and draft lotteries like the Vietnam Draft Lottery. In these settings, it is common to use instrumental variable (IV) regression for analysis.
 
-Instrumental variables identify the **Local Average Treatment Effect (LATE)** under three standard conditions: random assignment, exclusion, and monotonicity. The exclusion restriction embodies a key intuition: we don't expect GOTV efforts over the phone to affect people we aren't able to reach, nor do we expect people who were merely drawn up in the Vietnam Draft Lottery to have different attitudes towards minorities solely from being drafted—whatever effects we see, we expect them to result from actual service.
+Instrumental variables identify the Local Average Treatment Effect (LATE) under three standard conditions: random assignment, exclusion, and monotonicity. The exclusion restriction embodies a key intuition: we don't expect GOTV efforts over the phone to affect people we aren't able to reach, nor do we expect people who were merely drawn up in the Vietnam Draft Lottery to have different attitudes towards minorities solely from being drafted—whatever effects we see, we expect them to result from actual service.
 
-This leads to a sharp testable implication. When the instrument $Z$ flips, only **compliers** can change treatment status. Therefore, only compliers can contribute to the treatment effect, which implies that the distribution of the intention-to-treat (ITT) effect follows a specific pattern—one that looks closer to Figure 1d [here (pdf)](http://www.stat.columbia.edu/~gelman/research/unpublished/causal_quartets.pdf), with a lumpy distribution reflecting the complier-only effects.
+This leads to a sharp testable implication. When the instrument Z flips, only compliers can change treatment status. Therefore, only compliers can contribute to the treatment effect, which implies that the distribution of the intention-to-treat (ITT) effect follows a specific pattern—one with a lumpy distribution reflecting the complier-only effects.
 
-We turn this insight into testable implications about distributional equalities. One way to check if the data are consistent with these implications is to simulate the lumpy treatment effect pattern and check how closely the empirical distribution matches the theorized one. We provide estimators for the complier outcome distributions, uniform tests of these distributional implications, a complementary GMM test, and simulation evidence to validate the approach.
+We turn this insight into testable implications about distributional equalities. Under LATE assumptions, the difference in outcome CDFs between instrument values must equal the complier share times the difference in complier potential outcome CDFs. Formally, for all y: F_{Y|Z=1}(y) - F_{Y|Z=0}(y) = p_C[F_{1C}(y) - F_{0C}(y)]. This extends LATE from a statement about means to a family of restrictions across the entire distribution.
 
-### Setup and consequence
+These distributional restrictions provide leverage for detecting violations of the underlying assumptions. Exclusion violations shift the entire distribution, including regions where compliers are absent. Defiers create opposing movements that disturb the expected monotonicity of the CDF difference. The ITT effect distribution should exhibit concentrated movement where compliers lie and zero movement elsewhere—deviations from this pattern signal assumption failures.
 
-Assume random assignment. Assume exclusion so that $Y=Y(D)$. Assume monotonicity so that $D(1)\ge D(0)$. Assume SUTVA.
+We operationalize these insights through two main tests. The first is a uniform test of the distributional equality using either Kolmogorov-Smirnov or Cramér-von Mises statistics. We estimate complier CDFs using Abadie-style weighting, enforce shape restrictions through monotone rearrangement, and handle covariates via cross-fitting. The second is a GMM test that focuses on specific quantiles, which proves useful when violations are expected to concentrate in the tails of the distribution.
 
-Define the complier share
+A complementary falsification test exploits heterogeneity in compliance propensity. In covariate regions where compliance approaches zero, LATE predicts null ITT effects. We test this implication by examining weighted conditional mean differences across the instrument, with weights concentrated on low-compliance regions. This provides a direct test of exclusion using observable variation.
 
-$$
-p_C \;=\; \Pr\{D(1)>D(0)\} \;=\; \mathbb{E}[D\mid Z{=}1]-\mathbb{E}[D\mid Z{=}0].
-$$
+Simulations validate the approach across realistic scenarios. Under the null with complier shares ranging from 10% to 30%, tests maintain nominal size. Exclusion violations generate detectable distributional distortions, with power approaching one for moderate direct effects (γ = 0.5). When defiers are present, detection power increases with the defier share—five percent defiers yield 14% power, while ten percent defiers yield 31% power at n = 2000.
 
-Let $F_{Y\mid Z=z}$ be the cumulative distribution function of $Y$ under $Z=z$. Let $F_{1C}(y)=\Pr\{Y(1)\le y\mid C\}$ and $F_{0C}(y)=\Pr\{Y(0)\le y\mid C\}$.
+The method's power depends predictably on sample size and complier share. Doubling the sample size from 2000 to 4000 approximately doubles power for small exclusion violations. The relationship with complier share proves more complex—very low or very high complier shares reduce power against defier alternatives, as the distributional signature becomes harder to distinguish from sampling variation.
 
-**Only‑compliers‑move identity**
+These tests complement existing LATE diagnostics. While covariate balance tests check randomization and first-stage F-statistics assess instrument strength, our approach directly examines the exclusion and monotonicity assumptions that are typically untestable. The distributional perspective reveals violations that mean-based tests might miss—for instance, when positive and negative exclusion violations cancel in expectation but distort distributional shape.
 
-$$
-F_{Y\mid Z=1}(y)-F_{Y\mid Z=0}(y)\;=\;p_C\Big(F_{1C}(y)-F_{0C}(y)\Big)\quad\text{for all }y\in\mathbb{R}.
-$$
+In applications where exclusion holds approximately but not exactly, the magnitude of distributional distortions provides a measure of violation severity. This information guides sensitivity analyses and helps researchers assess whether IV estimates are sufficiently reliable for policy conclusions.
 
-This equality is the formal statement that noncompliers produce no distributional movement when $Z$ changes.
+Implementation remains straightforward with standard econometric software. The main computational burden comes from bootstrap inference when covariates are present, but this remains manageable even for moderate sample sizes. Cross-fitting prevents overfitting in first-stage estimation while maintaining valid inference.
 
-### Identification and estimation
-
-With observed covariates $X$, define
-
-$$
-e(X)=\Pr(Z{=}1\mid X),\qquad p_z(X)=\mathbb{E}[D\mid Z{=}z,X],\qquad p_C=\mathbb{E}\big[p_1(X)-p_0(X)\big].
-$$
-
-Use Abadie‑style weights to identify complier marginals. For any measurable function $g$,
-
-$$
-\mathbb{E}[g(Y(1))\mid C] \;=\; \frac{\mathbb{E}\!\left[g(Y)\,\frac{Z}{e(X)}\big(D-p_0(X)\big)\right]}{p_C},
-\qquad
-\mathbb{E}[g(Y(0))\mid C] \;=\; \frac{\mathbb{E}\!\left[g(Y)\,\frac{1-Z}{1-e(X)}\big(p_1(X)-D\big)\right]}{p_C}.
-$$
-
-Set $g_y(u)=\mathbf{1}\{u\le y\}$ to estimate $F_{1C}$ and $F_{0C}$. Enforce valid CDF shape by applying monotone rearrangement on a fine grid and clipping values to $[0,1]$. Estimate all first‑stage nuisance functions with cross‑fitting. Fit on training folds and evaluate on held‑out folds.
-
-#### Tests
-
-**Uniform CDF test**
-
-Compute
-
-$$\hat\Delta(y) =\hat F_{Y\mid Z=1}(y) - \hat F_{Y\mid Z=0}(y) - \hat p_C\Big(\hat F_{1C}(y)-\hat F_{0C}(y)\Big)$$
-
-Use either the Kolmogorov–Smirnov statistic
-
-$$T_{\infty}=\sup_y \big|\hat\Delta(y)\big| $$
-
-or the Cramér–von Mises statistic
-
-$$T_{2}=\int \hat\Delta(y)^2\, d\hat H(y), $$
-
-where $\hat H$ is a pooled empirical measure on a grid. With covariates, obtain critical values using a multiplier bootstrap that holds fold‑specific nuisance estimates fixed.
-
-**GMM moment test**
-
-For indicator basis $g_j(y)=\mathbf{1}\{y\le t_j\}$, define moments
-
-$$m_j = \Big(\mathbb{E}[g_j(Y)\mid Z{=}1]-\mathbb{E}[g_j(Y)\mid Z{=}0]\Big) - p_C\Big(\mathbb{E}[g_j(Y(1))\mid C]-\mathbb{E}[g_j(Y(0))\mid C]\Big)$$
-
-Stack $m=(m_1,\dots,m_J)$. Use a heteroskedastic‑robust GMM $J$‑test
-
-$$T_J = n\, \hat m^{\top} \hat W^{-1}\hat m$$
-
-with a sandwich covariance $\hat W$. This test targets chosen regions of the distribution through the cutpoints $t_j$.
-
-**Placebo falsification using predicted noncompliance**
-
-Define the compliance propensity $c(X)=p_1(X)-p_0(X)$. In regions where $c(X)$ is near zero, LATE implies a null ITT on $Y$. Estimate $c(X)$ with cross‑fitting. Define smoothed weights
-
-$$
-w_{\tau}(X)=K\!\left(\frac{\hat c(X)-\tau}{h}\right)
-$$
-
-for a kernel $K$ and bandwidth $h$. Test that the weighted conditional mean difference of $Y$ across $Z$ is zero. Construct a max statistic over a grid of thresholds $\tau$. Use a multiplier bootstrap to obtain critical values.
+The broader methodological point concerns the testable implications of identification assumptions. These assumptions often imply restrictions beyond their immediate targets. By developing appropriate tests for these implications, we strengthen our ability to assess when causal identification strategies succeed or fail. The distributional approach presented here represents one avenue for improving the credibility of instrumental variable analyses.
 
 #### Simulation study
 
@@ -122,4 +64,3 @@ The uniform CDF test holds size near nominal under the LATE null. It has strong 
 #### How to run
 
 Open JupyterLab and run the replication cell provided in the repository. 
-
