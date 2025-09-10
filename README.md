@@ -52,27 +52,15 @@ Set $g_y(u)=\mathbf{1}\{u\le y\}$ to estimate $F_{1C}$ and $F_{0C}$. Enforce val
 
 Compute
 
-$$
-\hat\Delta(y)
-=
-\hat F_{Y\mid Z=1}(y)
--
-\hat F_{Y\mid Z=0}(y)
--
-\hat p_C\Big(\hat F_{1C}(y)-\hat F_{0C}(y)\Big).
-$$
+$$\hat\Delta(y) =\hat F_{Y\mid Z=1}(y) - \hat F_{Y\mid Z=0}(y) - \hat p_C\Big(\hat F_{1C}(y)-\hat F_{0C}(y)\Big)$$
 
 Use either the Kolmogorov–Smirnov statistic
 
-$$
-T_{\infty}=\sup_y \big|\hat\Delta(y)\big|
-$$
+$$T_{\infty}=\sup_y \big|\hat\Delta(y)\big| $$
 
 or the Cramér–von Mises statistic
 
-$$
-T_{2}=\int \hat\Delta(y)^2\, d\hat H(y),
-$$
+$$T_{2}=\int \hat\Delta(y)^2\, d\hat H(y), $$
 
 where $\hat H$ is a pooled empirical measure on a grid. With covariates, obtain critical values using a multiplier bootstrap that holds fold‑specific nuisance estimates fixed.
 
