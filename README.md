@@ -52,27 +52,15 @@ Set $g_y(u)=\mathbf{1}\{u\le y\}$ to estimate $F_{1C}$ and $F_{0C}$. Enforce val
 
 Compute
 
-$$
-\hat\Delta(y)
-=
-\hat F_{Y\mid Z=1}(y)
--
-\hat F_{Y\mid Z=0}(y)
--
-\hat p_C\Big(\hat F_{1C}(y)-\hat F_{0C}(y)\Big).
-$$
+$$\hat\Delta(y) =\hat F_{Y\mid Z=1}(y) - \hat F_{Y\mid Z=0}(y) - \hat p_C\Big(\hat F_{1C}(y)-\hat F_{0C}(y)\Big)$$
 
 Use either the Kolmogorov–Smirnov statistic
 
-$$
-T_{\infty}=\sup_y \big|\hat\Delta(y)\big|
-$$
+$$T_{\infty}=\sup_y \big|\hat\Delta(y)\big| $$
 
 or the Cramér–von Mises statistic
 
-$$
-T_{2}=\int \hat\Delta(y)^2\, d\hat H(y),
-$$
+$$T_{2}=\int \hat\Delta(y)^2\, d\hat H(y), $$
 
 where $\hat H$ is a pooled empirical measure on a grid. With covariates, obtain critical values using a multiplier bootstrap that holds fold‑specific nuisance estimates fixed.
 
@@ -80,19 +68,11 @@ where $\hat H$ is a pooled empirical measure on a grid. With covariates, obtain 
 
 For indicator basis $g_j(y)=\mathbf{1}\{y\le t_j\}$, define moments
 
-$$
-m_j
-=
-\Big(\mathbb{E}[g_j(Y)\mid Z{=}1]-\mathbb{E}[g_j(Y)\mid Z{=}0]\Big)
--
-p_C\Big(\mathbb{E}[g_j(Y(1))\mid C]-\mathbb{E}[g_j(Y(0))\mid C]\Big).
-$$
+$$m_j = \Big(\mathbb{E}[g_j(Y)\mid Z{=}1]-\mathbb{E}[g_j(Y)\mid Z{=}0]\Big) - p_C\Big(\mathbb{E}[g_j(Y(1))\mid C]-\mathbb{E}[g_j(Y(0))\mid C]\Big)$$
 
 Stack $m=(m_1,\dots,m_J)$. Use a heteroskedastic‑robust GMM $J$‑test
 
-$$
-T_J = n\, \hat m^{\top} \hat W^{-1}\hat m
-$$
+$$T_J = n\, \hat m^{\top} \hat W^{-1}\hat m$$
 
 with a sandwich covariance $\hat W$. This test targets chosen regions of the distribution through the cutpoints $t_j$.
 
