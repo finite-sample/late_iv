@@ -1,6 +1,4 @@
-### LATE IV: Distributional Implications of LATE 
-
-# Distributional Implications of LATE
+### LATE IV: Distributional Implications of LATE
 
 Many randomized encouragement designs have imperfect compliance, where only a fraction of people comply with their assignment. Examples include phone-bank get-out-the-vote (GOTV) campaigns and draft lotteries like the Vietnam Draft Lottery. In these settings, it is common to use instrumental variable (IV) regression for analysis.
 
